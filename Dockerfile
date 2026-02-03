@@ -41,8 +41,10 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 8000
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-    CMD curl -f http://localhost:8000/sse || exit 1
+# Uncomment if you prefer Docker without compose
+# Healthcheck with multiple attempts for different endpoints
+#HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+#    CMD curl -f http://localhost:8000/sse || exit 1
 
 # when running the container, add --db-path and a bind mount to the host's db file
 ENTRYPOINT ["uv", "run", "excel-mcp-server"]
