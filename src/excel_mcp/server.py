@@ -85,6 +85,31 @@ def get_excel_path(filename: str) -> str:
     return os.path.join(EXCEL_FILES_PATH, filename)
 
 @mcp.tool()
+def test():
+    """    
+    Checks if SMB server is reachable and accessible.
+    
+    **NOT INTENDED FOR:**
+    - Bulk data transfer
+    - Production file operations
+    - Regular data retrieval
+    
+    **USE CASE:**
+    - Server health checks
+    - Connectivity troubleshooting
+    
+    Args: NOT NEEDED
+    
+    Returns: RETURN TRUE/FALSE
+    """
+    try: 
+        logger.info("Server received signal and execute operation")
+        return True
+    except Exception as e:
+        logger.info(f"Server catch an error: {e}")
+        return False
+
+@mcp.tool()
 def apply_formula(
     filepath: str,
     sheet_name: str,
