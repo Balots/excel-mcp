@@ -44,7 +44,7 @@ EXPOSE 8000
 # Uncomment if you prefer Docker without compose
 # Healthcheck with multiple attempts for different endpoints
 #HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-#    CMD curl -f http://localhost:8000/sse || curl -f http://localhost:8000/ || exit 1
+#    CMD curl -f http://localhost:8000/health
 
 # when running the container, add --db-path and a bind mount to the host's db file
 ENTRYPOINT ["uv", "run", "excel-mcp-server"]

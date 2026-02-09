@@ -4,6 +4,8 @@ import os
 from typing import Any, List, Dict
 
 from mcp.server.fastmcp import FastMCP
+from starlette.requests import Request
+from starlette.responses import PlainTextResponse
 
 # Import exceptions
 from excel_mcp.exceptions import (
@@ -67,6 +69,11 @@ mcp = FastMCP(
         }
     }
 )
+
+@mcp.custom_route("/health", methods=["GET"])
+async def health_check(request: Request) -> PlainTextResponse:
+    """Simple health check endpoint."""
+    return PlainTextResponse("OK", status_code=200)
 
 def get_excel_path(filename: str) -> str:
     """Get full path to Excel file.
