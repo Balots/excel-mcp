@@ -50,7 +50,7 @@ logging.basicConfig(
 logger = logging.getLogger("excel-mcp")
 
 # Get Excel files path from environment or use default
-EXCEL_FILES_PATH = os.environ.get("EXCEL_FILES_PATH", "./excel_files")
+EXCEL_FILES_PATH = os.environ.get("EXCEL_FILES_PATH", "./files")
 
 # Create the directory if it doesn't exist
 os.makedirs(EXCEL_FILES_PATH, exist_ok=True)
@@ -58,16 +58,8 @@ os.makedirs(EXCEL_FILES_PATH, exist_ok=True)
 # Initialize FastMCP server
 mcp = FastMCP(
     "excel-mcp",
-    version="0.1.0",
-    description="Excel MCP Server for manipulating Excel files",
-    dependencies=["openpyxl>=3.1.2"],
-    env_vars={
-        "EXCEL_FILES_PATH": {
-            "description": "Path to Excel files directory",
-            "required": False,
-            "default": EXCEL_FILES_PATH
-        }
-    }
+    host="0.0.0.0",
+    port=8000
 )
 
 @mcp.custom_route("/health", methods=["GET"])
@@ -123,7 +115,17 @@ def apply_formula(
     cell: str,
     formula: str,
 ) -> str:
-    """Apply Excel formula to cell."""
+    """
+    Apply Excel formula to cell.
+    Works with files in mount volume
+    Args: 
+        filepath: str,
+        sheet_name: str,
+        cell: str,
+        formula: str
+    
+    Returns: Message
+    """
     try:
         full_path = get_excel_path(filepath)
         # First validate the formula
